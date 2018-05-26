@@ -7,5 +7,9 @@ Input: Keyword and no.of pdf's to download
 
 
 Dependencies:
+
+
   Beautifulsoup Library
+  
+  
   Requests Module(from urllib)
