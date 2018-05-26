@@ -1,2 +1,6 @@
 # pdf_downloader
-Search google and find pdf files by a keyword and download .
+A simple and straightforward pdf download tool which downloads pdf files indexed by google.
+Input: Keyword and no.of pages to search
+Dependencies:
+  Beautifulsoup Library
+  Requests Module(from urllib)
