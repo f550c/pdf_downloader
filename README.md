@@ -3,7 +3,7 @@ A simple and straightforward pdf download tool which downloads pdf files indexed
 
 
 
-Input: Keyword and no.of pages to search
+Input: Keyword and no.of pdf's to download
 
 
 Dependencies:
