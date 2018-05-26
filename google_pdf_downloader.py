@@ -1,6 +1,6 @@
 #downloads pdfs indexed by google
-#input:no of pages to search
-#query
+#input:no of pages to search & query
+#generates a log file
 
 
 from urllib.request import urlopen
@@ -12,10 +12,15 @@ import urllib.request
 from urllib.parse import unquote
 import os
 import sys
+from datetime import datetime
+timee=str(datetime.now())
 b=0
+tx = open('log.txt','wb')
+timenow=timee.encode('utf-8')
+tx.write(timenow)
 keyword=input('Enter search term :')
 try:
-    pageno =int(input('Enter no of pages to be searched(upto 18 pages):'))+1
+    nodown =int(input('Enter no of pdf\'s to be downloaded :'))
 except ValueError:
     print("Not a number")
 query=keyword.replace(' ','+')
@@ -26,6 +31,7 @@ try:
 	os.makedirs(name)
 except:
 	pass
+pageno=15
 user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
 for k in range(1,pageno):
 	pageid=page[k]
@@ -34,18 +40,17 @@ for k in range(1,pageno):
 	headers={'User-Agent':user_agent,} 
 	request=urllib.request.Request(link,None,headers)
 	html = urllib.request.urlopen(request)
-	tx = open('1search_html.txt','wb')
 	soup = BeautifulSoup(html,'lxml')
 	po=soup.find_all(href=re.compile("http://"))
 	newlin='\n'
 	newline=newlin.encode('utf-8')
-	
+	tx.write(newline)
+	done=0
 	for i in po:
 	
 		io=i.encode('utf-8')
 		searchObj = re.search( r':https://(.*).pdf', str(io), re.M|re.I)
 		searchObj1 = re.search( r':http://(.*).pdf', str(io), re.M|re.I)
-
 		if searchObj:
 			hulu=searchObj.group(1)
 			cbmuth=hulu.encode('utf-8')
@@ -57,8 +62,7 @@ for k in range(1,pageno):
 			realink=urllib.parse.unquote(realink2)
 			split = urlsplit(str(drink))
 			filename = split.path.split("/")[-1]
-			tx.write(drink)
-			tx.write(newline)
+			
 		
 			titleg = re.search( r'(.*).pdf', filename, re.M|re.I)
 			if(titleg==None):
@@ -75,7 +79,11 @@ for k in range(1,pageno):
 
 			print(realink)
 			try:
+				
 				filoo = urllib.request.urlretrieve (realink,titlee)
+				tx.write(drink)
+				tx.write(newline)
+				done=done+1
 			except:
 				pass
 		if searchObj1:
@@ -87,8 +95,7 @@ for k in range(1,pageno):
 			realink1=urllib.parse.unquote(dracu1)
 			realink2=urllib.parse.unquote(realink1)
 			realink=urllib.parse.unquote(realink2)
-			tx.write(drinku1)
-			tx.write(newline)
+			
 		
 
 			split1 = urlsplit(str(drinku1))
@@ -102,6 +109,11 @@ for k in range(1,pageno):
 			print(realink)
 			try:
 				filoo1 = urllib.request.urlretrieve (realink,titlee)
+				tx.write(drinku1)
+				tx.write(newline)
+				done=done+1
 			except:
 				pass
+		if(done>=nodown):
+					exit()
 #thankyou
