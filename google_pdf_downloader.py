@@ -25,7 +25,7 @@ except ValueError:
     print("Not a number")
 query=keyword.replace(' ','+')
 name=keyword.replace(' ', '_')
-query=query+'pdf'
+query=query+'+pdf'
 page=[0,10,11,21,31,41,51,61,71,81,91,101,111,121,131,141,151,161,171,181,191]
 try:
 	os.makedirs(name)
@@ -36,7 +36,7 @@ user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/
 for k in range(1,pageno):
 	pageid=page[k]
 	link = 'https://www.google.com/search?q=filetype%3Apdf+'+ query +'&start='+str(pageid)
-	print(link)
+	#print(link)
 	headers={'User-Agent':user_agent,} 
 	request=urllib.request.Request(link,None,headers)
 	html = urllib.request.urlopen(request)
@@ -47,7 +47,8 @@ for k in range(1,pageno):
 	tx.write(newline)
 	done=0
 	for i in po:
-	
+		if(done>=nodown):
+			exit()
 		io=i.encode('utf-8')
 		searchObj = re.search( r':https://(.*).pdf', str(io), re.M|re.I)
 		searchObj1 = re.search( r':http://(.*).pdf', str(io), re.M|re.I)
@@ -73,17 +74,19 @@ for k in range(1,pageno):
 			title= title5.encode('utf-8')
 		
 			titlee=str(name)+'/'+str(title5)
-			tx.write(title)
-			tx.write(newline)
+			
 			#fullfilename = os.path.join(myPath, )
 
-			print(realink)
+			
 			try:
 				
 				filoo = urllib.request.urlretrieve (realink,titlee)
 				tx.write(drink)
 				tx.write(newline)
+				tx.write(title)
+				tx.write(newline)
 				done=done+1
+				print(realink)
 			except:
 				pass
 		if searchObj1:
@@ -104,16 +107,16 @@ for k in range(1,pageno):
 			title12 = titleg1.group(1)+'.pdf'
 			title1=title12.encode('utf-8')
 			titlee=str(name)+'/'+str(title12)
-			tx.write(title1)
-			tx.write(newline)
-			print(realink)
+			
 			try:
 				filoo1 = urllib.request.urlretrieve (realink,titlee)
+				tx.write(title1)
+				tx.write(newline)
 				tx.write(drinku1)
 				tx.write(newline)
+				print(realink)
 				done=done+1
 			except:
 				pass
-		if(done>=nodown):
-					exit()
+		
 #thankyou
